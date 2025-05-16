@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form id="form">
+        <img src="logo.jpg" alt="Logo">
+        <input type="text" name="nombre" placeholder="Coloca tu nombre" required>
+        <input type="text" name="apellido" placeholder="Coloca tu apellido" required>
+        <input type="number" name="edad" placeholder="Coloca tu edad" required min="0">
+        <input type="textr" name="dni" placeholder="Coloca tu dni"required>
+        <input type="text" name="telefono" placeholder="Coloque su telefono"required>
+        <input type="text" name="destino" placeholder="Coloque su destino"required>
+        <input type="text" name="salida" placeholder="Coloque hora de salida"required>
+        <input type="text" name="precio" placeholder="Coloque el precio"required>
+        <button type="submit">Registrar</button>
+    </form>
+    <script>
+        const form = document.getElementById('form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            
+            const response = await fetch('/submit', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(data)
+            });
+
+            if(response.ok){
+                alert("Formulario se envio con exito");
+                form.reset();
+            }else{
+                alert("Error al enviar");
+            }
+        });
+    </script> 
+</body>
+</html>
